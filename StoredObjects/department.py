@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from .author import Author
+from author import Author
 
 
 class Department:

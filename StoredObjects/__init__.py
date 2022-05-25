@@ -1,7 +1,7 @@
-from src.author import Author
-from src.department import Department
-from src.publication import Publication
-from src.university import University
+from author import Author
+from department import Department
+from publication import Publication
+from university import University
 
 _univer = None
 

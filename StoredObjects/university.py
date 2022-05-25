@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import pickle
-from .department import Department
+from department import Department
 
 class University:
     _saveFile = "univer_save.pickle"
