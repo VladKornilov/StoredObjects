@@ -1,34 +1,42 @@
 import requests
 from bs4 import BeautifulSoup
 import pickle
-from department import Department
+from .department import Department
 
 class University:
     _saveFile = "univer_save.pickle"
+    _univer = None
+
 
     def __init__(self):
         self.departments = []
         self.loadData()
-        self.fillDepartments()
+        if not self.departments:
+            self.fillDepartments()
         self.saveData()
 
+    @staticmethod
+    def getUniversity():
+        if _univer is None:
+            _univer = University()
+        return _univer
+
     def fillDepartments(self):
-        if not self.departments:
-            cafsLink = 'https://www.mstu.edu.ru/structure/kafs/'
-            html = requests.get(cafsLink).text
-            soup = BeautifulSoup(html, features="html.parser")
-            lists = soup.findAll("ul", {"class": "anker"})
-            # print(lists)
-            links = []
-            for ul in lists:
-                hrefs = ul.findAll("a")
-                for h in hrefs:
-                    links.append(h['href'])
-            print(links)
-            baseUrl = 'https://www.mstu.edu.ru'
-            for link in links:
-                url = baseUrl + link
-                self.addDepartment(url)
+        cafsLink = 'https://www.mstu.edu.ru/structure/kafs/'
+        html = requests.get(cafsLink).text
+        soup = BeautifulSoup(html, features="html.parser")
+        lists = soup.findAll("ul", {"class": "anker"})
+        # print(lists)
+        links = []
+        for ul in lists:
+            hrefs = ul.findAll("a")
+            for h in hrefs:
+                links.append(h['href'])
+        print(links)
+        baseUrl = 'https://www.mstu.edu.ru'
+        for link in links:
+            url = baseUrl + link
+            self.addDepartment(url)
 
     def addDepartment(self, link):
         dep = Department(link)
@@ -75,3 +83,9 @@ class University:
         with open(University._saveFile, 'wb') as f:
             pickle.dump(self, f)
 
+
+_univer = None
+
+def getUniversity():
+    global _univer
+    

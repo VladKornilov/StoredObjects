@@ -1,5 +1,5 @@
 dist/*
 __pycache__/*
 StoredObjects/__pycache__
-StoredObjects/*.egg-info
+*.egg-info
 *.pickle
