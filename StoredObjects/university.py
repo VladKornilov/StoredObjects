@@ -17,9 +17,9 @@ class University:
 
     @staticmethod
     def getUniversity():
-        if _univer is None:
-            _univer = University()
-        return _univer
+        if University._univer is None:
+            University._univer = University()
+        return University._univer
 
     def fillDepartments(self):
         cafsLink = 'https://www.mstu.edu.ru/structure/kafs/'
@@ -82,10 +82,3 @@ class University:
     def saveData(self):
         with open(University._saveFile, 'wb') as f:
             pickle.dump(self, f)
-
-
-_univer = None
-
-def getUniversity():
-    global _univer
-    
