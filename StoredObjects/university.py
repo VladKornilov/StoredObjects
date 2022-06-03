@@ -11,8 +11,6 @@ class University:
     def __init__(self):
         self.departments = []
         self.loadData()
-        if not self.departments:
-            self.fillDepartments()
         self.saveData()
 
     @staticmethod
@@ -20,6 +18,21 @@ class University:
         if University._univer is None:
             University._univer = University()
         return University._univer
+
+    def loadData(self):
+        try:
+            with open(University._saveFile, 'rb') as f:
+                copy = pickle.load(f)
+                if copy is not None:
+                    self.departments = copy.departments
+        except:
+            print("No saved data or invalid, loading...")
+            self.fillDepartments()
+            pass
+
+    def saveData(self):
+        with open(University._saveFile, 'wb') as f:
+            pickle.dump(self, f)
 
     def fillDepartments(self):
         cafsLink = 'https://www.mstu.edu.ru/structure/kafs/'
@@ -70,15 +83,4 @@ class University:
             return None
         return empls[0]
 
-    def loadData(self):
-        try:
-            with open(University._saveFile, 'rb') as f:
-                copy = pickle.load(f)
-                if copy is not None:
-                    self.departments = copy.departments
-        except EnvironmentError:
-            pass
-
-    def saveData(self):
-        with open(University._saveFile, 'wb') as f:
-            pickle.dump(self, f)
+    

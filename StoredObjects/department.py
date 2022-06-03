@@ -45,21 +45,3 @@ class Department:
         if len(empls) != 1:
             return None
         return empls[0]
-
-    def createReport(self):
-        publications = []
-
-        from datetime import date
-        from dateutil.relativedelta import relativedelta
-        for empl in self.employees:
-            if empl is not None:
-                toDate = date.today()
-                fromDate = toDate - relativedelta(years=1)
-
-                #from API import crossref_api
-                #publs = crossref_api.GetPublicationsByPeriod(empl, fromDate, toDate)
-                #publications.extend(publs)
-                #data - список публикаций сотрудника (каждая - в виде dict {title, author, createdDate}
-
-        #from Reports.word_creator import createForm2
-        #createForm2(publications)

@@ -10,7 +10,9 @@ class Author:
         self.crossrefName = []
         self.scopusName = []
         self.affiliations = []
-        self.orcid = None
+        self.orcID = None
+        self.researcherID = None
+        self.publonsID = None
         self.publications = []
 
     def getScopusName(self):

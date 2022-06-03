@@ -22,7 +22,7 @@ class Publication:
         self.containerTitle = []
         # self.pages = "" # для статьи в журнале
 
-    def MergeIDs(self, anotherPubl):
+    def mergeIDs(self, anotherPubl):
         if anotherPubl is None:
             return
 
@@ -46,6 +46,7 @@ class Publication:
         table.add_row(["EID", self.eid])
         table.add_row(["Scopus ID", self.scopusId])
         table.add_row(["PII", self.pii])
+        table.add_row(["UT", self.ut])
         table.add_row(["Дата публикации", str(self.publishedDate)])
         table.add_row(["Дата индексирования", str(self.indexedDate)])
         table.add_row(["Число цитирований", self.citations])
