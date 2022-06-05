@@ -37,7 +37,7 @@ class Department:
                 names.append(empl.name)
         return names
 
-    def findEmployee(self, name):
+    def searchEmployee(self, name):
         empls = []
         for empl in self.employees:
             if name.lower() in empl.name.lower():

@@ -21,3 +21,15 @@ class Author:
             self.scopusName = (splitName[0], splitName[1][0] + '.' + splitName[2][0] + '.')
         return self.scopusName
 
+    def checkSameAuthor(self, author):
+        if (self.name == author.name): return True
+        if (self.orcID == author.orcID): return True
+        if (self.researcherID == author.researcherID): return True
+        if (self.publonsID == author.publonsID): return True
+        return False
+
+    def searchPublicationByDOI(self, doi):
+        for pub in self.publications:
+            if pub.doi == doi:
+                return pub
+        return None

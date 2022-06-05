@@ -22,10 +22,19 @@ class Publication:
         self.containerTitle = []
         # self.pages = "" # для статьи в журнале
 
+    def searchAuthor(self, author):
+        for au in self.authors:
+            if au.checkSameAuthor(author):
+                return au
+        return None
+
     def mergeIDs(self, anotherPubl):
         if anotherPubl is None:
             return
-
+        if self.issn is None:
+            self.issn = anotherPubl.issn 
+        if self.doi is None:
+            self.doi = anotherPubl.doi
         if self.eid is None:
             self.eid = anotherPubl.eid
         if self.scopusId is None:
@@ -34,6 +43,10 @@ class Publication:
             self.pii = anotherPubl.pii
         if self.ut is None:
             self.ut = anotherPubl.ut
+
+    def mergeAuthors(self, anotherPubl):
+        if anotherPubl is None:
+            return
 
     def __str__(self):
         table = PrettyTable()
@@ -53,5 +66,4 @@ class Publication:
         table.add_row(["Издатель", self.publisher])
         table.add_row(["Источник", self.containerTitle])
         return table.get_string()
-
 

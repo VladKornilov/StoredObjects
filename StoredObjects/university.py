@@ -53,7 +53,8 @@ class University:
 
     def addDepartment(self, link):
         dep = Department(link)
-        self.departments.append(dep)
+        if dep.name != "":
+            self.departments.append(dep)
 
     def getDepartment(self, name):
         for dep in self.departments:
@@ -73,10 +74,10 @@ class University:
             names.extend(dep.searchEmployees(name))
         return names
 
-    def getAuthor(self, fullName):
+    def searchEmployee(self, fullName):
         empls = []
         for dep in self.departments:
-            empl = dep.findEmployee(fullName)
+            empl = dep.searchEmployee(fullName)
             if empl is not None:
                 empls.append(empl)
         if len(empls) != 1:
