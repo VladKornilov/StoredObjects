@@ -3,15 +3,16 @@ from prettytable import PrettyTable
 
 
 class Publication:
-    defaultDate = datetime.datetime(1970, 1, 1)
+    defaultDate = datetime.date(1970, 1, 1)
 
     def __init__(self):
         self.title = ""
+        self.description = ""
         self.authors = []
         self.type = ""
         self.issn = None
         self.doi = None
-        self.eid = None
+        self.eid = None # scopus
         self.scopusId = None
         self.pii = None
         self.ut = None  # wos
@@ -21,6 +22,11 @@ class Publication:
         self.publisher = ""
         self.containerTitle = []
         # self.pages = "" # для статьи в журнале
+    
+    def __eq__(self, other):
+        if isinstance(other, Publication):
+            return self.doi == other.doi
+        return False
 
     def searchAuthor(self, author):
         for au in self.authors:
@@ -28,9 +34,13 @@ class Publication:
                 return au
         return None
 
-    def mergeIDs(self, anotherPubl):
+    def enrich(self, anotherPubl):
         if anotherPubl is None:
             return
+        if self.title == "":
+            self.title = anotherPubl.title
+        if self.description == "":
+            self.description = anotherPubl.description
         if self.issn is None:
             self.issn = anotherPubl.issn 
         if self.doi is None:
@@ -43,10 +53,14 @@ class Publication:
             self.pii = anotherPubl.pii
         if self.ut is None:
             self.ut = anotherPubl.ut
+        if self.citations == 0:
+            self.citations = anotherPubl.citations
+        
+        for au in anotherPubl.authors:
+            same = False
+            if au not in self.authors:
+                self.authors.append(au)
 
-    def mergeAuthors(self, anotherPubl):
-        if anotherPubl is None:
-            return
 
     def __str__(self):
         table = PrettyTable()

@@ -84,4 +84,10 @@ class University:
             return None
         return empls[0]
 
+    def searchPublicationByDOI(self, doi):
+        for dep in self.departments:
+            publ = dep.searchPublicationByDOI(doi)
+            if publ is not None:
+                return publ
+        return None
     

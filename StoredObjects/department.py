@@ -45,3 +45,18 @@ class Department:
         if len(empls) != 1:
             return None
         return empls[0]
+
+    def searchPublicationByDOI(self, doi):
+        for empl in self.employees:
+            publ = empl.searchPublicationByDOI(doi)
+            if publ is not None:
+                return publ
+        return None
+
+    def getPublications(self):
+        publs = set()
+        for empl in self.employees:
+            for pub in empl.publications:
+                publs.add(pub)
+        return list(publs)
+        
