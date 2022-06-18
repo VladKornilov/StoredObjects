@@ -30,7 +30,7 @@ class Publication:
 
     def searchAuthor(self, author):
         for au in self.authors:
-            if au.checkSameAuthor(author):
+            if au == author:
                 return au
         return None
 

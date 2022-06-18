@@ -4,12 +4,13 @@ import pickle
 from .department import Department
 
 class University:
-    _saveFile = "univer_save.pickle"
+    _dataFile = "univer_save.pickle"
     _univer = None
 
 
     def __init__(self):
         self.departments = []
+        self.excludedPublications = []
         self.loadData()
         self.saveData()
 
@@ -21,17 +22,17 @@ class University:
 
     def loadData(self):
         try:
-            with open(University._saveFile, 'rb') as f:
+            with open(University._dataFile, 'rb') as f:
                 copy = pickle.load(f)
                 if copy is not None:
                     self.departments = copy.departments
         except:
-            print("No saved data or invalid, loading...")
+            print("No saved data or invalid, loading from scratch")
             self.fillDepartments()
             pass
 
     def saveData(self):
-        with open(University._saveFile, 'wb') as f:
+        with open(University._dataFile, 'wb') as f:
             pickle.dump(self, f)
 
     def fillDepartments(self):
