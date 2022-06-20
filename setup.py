@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="kvv_StoredObjects",
-    version="0.0.13",
+    version="0.0.14",
     author="Vladislav Kornilov",
     author_email="v.kornilovv@yandex.ru",
     description="StoredObjects is a helper package with University objects for the Publications Activity Module",
@@ -24,7 +24,6 @@ setuptools.setup(
     install_requires=[
         'requests',
         'beautifulsoup4',
-        'transliterate',
         'prettytable'
     ],
     python_requires=">=3.6",

@@ -10,14 +10,14 @@ class Publication:
         self.description = ""
         self.authors = []
         self.type = ""
-        self.issn = None
-        self.doi = None
-        self.scopusLink = None
-        self.eid = None # scopus
-        self.scopusId = None
-        self.pii = None
-        self.ut = None  # wos
-        self.wosLink = None
+        self.issn = ""
+        self.doi = ""
+        self.scopusLink = ""
+        self.eid = "" # scopus
+        self.scopusId = ""
+        self.pii = ""
+        self.ut = ""  # wos
+        self.wosLink = ""
         self.publishedDate = Publication.defaultDate
         self.indexedDate = Publication.defaultDate
         self.citations = 0
@@ -39,23 +39,27 @@ class Publication:
     def enrich(self, anotherPubl):
         if anotherPubl is None:
             return
-        if self.title == "":
+        if not self.title:
             self.title = anotherPubl.title
-        if self.description == "":
+        if not self.description:
             self.description = anotherPubl.description
-        if self.issn is None:
+        if not self.issn:
             self.issn = anotherPubl.issn 
-        if self.doi is None:
+        if not self.doi:
             self.doi = anotherPubl.doi
-        if self.eid is None:
+        if not self.eid:
             self.eid = anotherPubl.eid
-        if self.scopusId is None:
+        if not self.scopusLink:
+            self.scopusLink = anotherPubl.scopusLink
+        if not self.scopusId:
             self.scopusId = anotherPubl.scopusId
-        if self.pii is None:
+        if not self.pii:
             self.pii = anotherPubl.pii
-        if self.ut is None:
+        if not self.ut:
             self.ut = anotherPubl.ut
-        if self.citations == 0:
+        if not self.wosLink:
+            self.wosLink = anotherPubl.wosLink
+        if not self.citations:
             self.citations = anotherPubl.citations
         
         for au in anotherPubl.authors:

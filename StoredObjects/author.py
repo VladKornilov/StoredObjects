@@ -41,7 +41,7 @@ class Author:
     def translate(name):
         symbols = (u"абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ",
                   (*list(u'abvgdee'), 'zh', *list(u'zijklmnoprstuf'), 'kh', 'z', 'ch', 'sh', 'sh', '',
-                  'y', '', 'e', 'yu','ya', *list(u'ABVGDEE'), 'ZH', 
+                  'y', '', 'e', 'u','a', *list(u'ABVGDEE'), 'ZH', 
                   *list(u'ZIJKLMNOPRSTUF'), 'Kh', 'Z', 'Ch', 'Sh', 'Sh', '', 'Y', '', 'E', 'Yu', 'Ya', ' '))
 
         coding_dict = {source: dest for source, dest in zip(*symbols)}
