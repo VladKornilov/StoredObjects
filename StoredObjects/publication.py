@@ -12,10 +12,12 @@ class Publication:
         self.type = ""
         self.issn = None
         self.doi = None
+        self.scopusLink = None
         self.eid = None # scopus
         self.scopusId = None
         self.pii = None
         self.ut = None  # wos
+        self.wosLink = None
         self.publishedDate = Publication.defaultDate
         self.indexedDate = Publication.defaultDate
         self.citations = 0

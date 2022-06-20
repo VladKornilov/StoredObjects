@@ -1,9 +1,7 @@
-from bs4 import BeautifulSoup
-
 
 class Author:
 
-    def __init__(self, name):
+    def __init__(self, name, department=None):
         self.name = name
         self.engName = Author.translate(name)
         splitName = self.engName.split()
@@ -14,6 +12,7 @@ class Author:
         self.orcID = None
         self.researcherID = None
         self.publonsID = None
+        self.department = department
         self.publications = []
 
     def __eq__(self, author):

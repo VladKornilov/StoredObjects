@@ -27,7 +27,7 @@ class Department:
         for row in rows:
             cols = row.find_all('td')
             name = cols[0].text
-            author = Author(name)
+            author = Author(name, self)
             self.employees.append(author)
 
     def searchEmployees(self, name):
