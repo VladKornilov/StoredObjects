@@ -5,11 +5,21 @@ from .author import Author
 
 class Department:
 
-    def __init__(self, link):
+    def __init__(self, link=None):
         self.siteLink = link
         self.name = ""
         self.employees = []
-        self.fillData()
+        if link is not None:
+            self.fillData()
+
+    def addEmployee(self, name):
+        empl = Author(name, self)
+        self.employees.append(empl)
+
+    def deleteEmployee(self, name):
+        empl = self.searchEmployee(name)
+        if empl is not None:
+            self.employees.remove(empl)
 
     def fillData(self):
         r = requests.get(self.siteLink)
@@ -53,10 +63,28 @@ class Department:
                 return publ
         return None
 
-    def getPublications(self):
-        publs = set()
+    def getPublications(self, fromDate, toDate):
+        publs = []
         for empl in self.employees:
             for pub in empl.publications:
-                publs.add(pub)
-        return list(publs)
-        
+                publs.append(pub)
+        self.mergePublications(publs)
+
+        publs = []
+        for empl in self.employees:
+            for pub in empl.publications:
+                if pub not in publs:
+                    if fromDate <= pub.publishedDate <= toDate:
+                        publs.append(pub)
+        return publs
+
+    def mergePublications(self, publications):
+        for pub in publications:
+            for pub2 in publications:
+                if pub2 is pub:
+                    continue
+                if pub == pub2:
+                    for au in pub.authors:
+                        au.addPublication(pub2)
+                    for au in pub2.authors:
+                        au.addPublication(pub)

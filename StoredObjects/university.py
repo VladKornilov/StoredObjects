@@ -8,28 +8,28 @@ class University:
     _univer = None
 
 
-    def __init__(self):
+    def __init__(self, canSearchMstu):
+        self.canSearchMstu = canSearchMstu
         self.departments = []
-        self.excludedPublications = []
         self.loadData()
         self.saveData()
 
     @staticmethod
-    def getUniversity():
+    def getUniversity(canSearchMstu = False):
         if University._univer is None:
-            University._univer = University()
+            University._univer = University(canSearchMstu)
         return University._univer
 
     def loadData(self):
         try:
             with open(University._dataFile, 'rb') as f:
-                copy = pickle.load(f)
-                if copy is not None:
-                    self.departments = copy.departments
+                data = pickle.load(f)
+                if data is not None:
+                    self.departments = data.departments
         except:
-            print("No saved data or invalid, loading from scratch")
-            self.fillDepartments()
-            pass
+            if self.canSearchMstu:
+                print("No saved data or invalid, loading from scratch")
+                self.fillDepartments()
 
     def saveData(self):
         with open(University._dataFile, 'wb') as f:
@@ -37,25 +37,32 @@ class University:
 
     def fillDepartments(self):
         cafsLink = 'https://www.mstu.edu.ru/structure/kafs/'
-        html = requests.get(cafsLink).text
-        soup = BeautifulSoup(html, features="html.parser")
-        lists = soup.findAll("ul", {"class": "anker"})
-        # print(lists)
-        links = []
-        for ul in lists:
-            hrefs = ul.findAll("a")
-            for h in hrefs:
-                links.append(h['href'])
-        print(links)
-        baseUrl = 'https://www.mstu.edu.ru'
-        for link in links:
-            url = baseUrl + link
-            self.addDepartment(url)
+        try:
+            html = requests.get(cafsLink).text
+            soup = BeautifulSoup(html, features="html.parser")
+            lists = soup.findAll("ul", {"class": "anker"})
+            # print(lists)
+            links = []
+            for ul in lists:
+                hrefs = ul.findAll("a")
+                for h in hrefs:
+                    links.append(h['href'])
+            print(links)
+            baseUrl = 'https://www.mstu.edu.ru'
+            for link in links:
+                url = baseUrl + link
+                self.addDepartment(url)
+        except:
+            print("Could not reach MSTU website")
+            return
 
     def addDepartment(self, link):
         dep = Department(link)
         if dep.name != "":
             self.departments.append(dep)
+
+    def addOfflineDepartment(self, dept):
+        self.departments.append(dept)
 
     def getDepartment(self, name):
         for dep in self.departments:

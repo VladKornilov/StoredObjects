@@ -4,9 +4,15 @@ class Author:
     def __init__(self, name, department=None):
         self.name = name
         self.engName = Author.translate(name)
+        if name.startswith("Романовская"):
+            self.engName = self.engName.replace("Yuliya", "Yulia")
+
         splitName = self.engName.split()
         self.orcidName = splitName[1] + " " + splitName[0]
-        self.scopusName = (splitName[0], splitName[1][0] + '.' + splitName[2][0] + '.')
+        scFirst = splitName[1][0] + '.'
+        if len(splitName) > 1:
+            scFirst += splitName[2][0] + '.'
+        self.scopusName = (splitName[0], scFirst)
         self.crossrefName = []
         self.affiliations = []
         self.orcID = None
@@ -41,7 +47,7 @@ class Author:
     def translate(name):
         symbols = (u"абвгдеёжзийклмнопрстуфхцчшщъыьэюяАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ ",
                   (*list(u'abvgdee'), 'zh', *list(u'zijklmnoprstuf'), 'kh', 'z', 'ch', 'sh', 'sh', '',
-                  'y', '', 'e', 'u','a', *list(u'ABVGDEE'), 'ZH', 
+                  'y', '', 'e', 'yu','ya', *list(u'ABVGDEE'), 'ZH',
                   *list(u'ZIJKLMNOPRSTUF'), 'Kh', 'Z', 'Ch', 'Sh', 'Sh', '', 'Y', '', 'E', 'Yu', 'Ya', ' '))
 
         coding_dict = {source: dest for source, dest in zip(*symbols)}
