@@ -13,8 +13,17 @@ class Department:
             self.fillData()
 
     def addEmployee(self, name):
+        empl = self.searchEmployee(name)
+        if empl:
+            return False
         empl = Author(name, self)
         self.employees.append(empl)
+        return True
+
+    def updateEmployee(self, oldname, newname):
+        empl = self.searchEmployee(oldname)
+        if empl:
+            empl.setName(newname)
 
     def deleteEmployee(self, name):
         empl = self.searchEmployee(name)
@@ -25,7 +34,7 @@ class Department:
         r = requests.get(self.siteLink)
         soup = BeautifulSoup(r.text, features="html.parser")
         title = soup.find("h1")
-        if title.text == "Ботанический сад": # не является кафедрой, другой интерфейс
+        if title.text == "Ботанический сад":  # не является кафедрой, другой интерфейс
             return
 
         self.name = title.text

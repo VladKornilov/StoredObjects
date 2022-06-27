@@ -1,18 +1,10 @@
-
 class Author:
 
     def __init__(self, name, department=None):
-        self.name = name
-        self.engName = Author.translate(name)
-        if name.startswith("Романовская"):
-            self.engName = self.engName.replace("Yuliya", "Yulia")
-
-        splitName = self.engName.split()
-        self.orcidName = splitName[1] + " " + splitName[0]
-        scFirst = splitName[1][0] + '.'
-        if len(splitName) > 1:
-            scFirst += splitName[2][0] + '.'
-        self.scopusName = (splitName[0], scFirst)
+        self.name = ""
+        self.engName = ""
+        self.orcidName = ""
+        self.scopusName = ""
         self.crossrefName = []
         self.affiliations = []
         self.orcID = None
@@ -20,6 +12,19 @@ class Author:
         self.publonsID = None
         self.department = department
         self.publications = []
+        self.setName(name)
+
+    def setName(self, name):
+        self.name = name
+        self.engName = Author.translate(name)
+        if name.startswith("Романовская"):
+            self.engName = self.engName.replace("Yuliya", "Yulia")
+        splitName = self.engName.split()
+        self.orcidName = splitName[1] + " " + splitName[0]
+        scFirst = splitName[1][0] + '.'
+        if len(splitName) > 2:
+            scFirst += splitName[2][0] + '.'
+        self.scopusName = (splitName[0], scFirst)
 
     def __eq__(self, author):
         if (self.name == author.name): return True

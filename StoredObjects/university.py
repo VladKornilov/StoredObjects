@@ -56,13 +56,13 @@ class University:
             print("Could not reach MSTU website")
             return
 
+    def addOfflineDepartment(self, dept):
+        self.departments.insert(0, dept)
+
     def addDepartment(self, link):
         dep = Department(link)
         if dep.name != "":
             self.departments.append(dep)
-
-    def addOfflineDepartment(self, dept):
-        self.departments.append(dept)
 
     def getDepartment(self, name):
         for dep in self.departments:

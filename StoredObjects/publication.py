@@ -43,6 +43,8 @@ class Publication:
             self.title = anotherPubl.title
         if not self.description:
             self.description = anotherPubl.description
+        if not self.type:
+            self.type = anotherPubl.type
         if not self.issn:
             self.issn = anotherPubl.issn 
         if not self.doi:
@@ -59,6 +61,8 @@ class Publication:
             self.ut = anotherPubl.ut
         if not self.wosLink:
             self.wosLink = anotherPubl.wosLink
+        if not self.publishedDate:
+            self.publishedDate = anotherPubl.publishedDate
         if not self.citations:
             self.citations = anotherPubl.citations
         
